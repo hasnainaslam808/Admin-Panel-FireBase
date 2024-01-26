@@ -18,24 +18,21 @@ this.setproduct=!this.setproduct;
 productList: Product[]=[];
 productObj:Product={
   id: '',
-
   prodName:'',
     prodDes:'',
     prodPrice:'',
-    prodOrigin:'',
     prodMaterial:'',
     prodDemension:'',
-    prodFinish:'',
     prodIncludes:'',
+  
+
 };
 id:string='';
 prodName:string='';
 prodDes:string='';
 prodPrice:string='';
-prodOrigin:string='';
 prodMaterial:string='';
 prodDemension:string='';
-prodFinish:string='';
 prodIncludes:string='';
   constructor(private utility:UtilityService) { }
 
@@ -70,7 +67,7 @@ prodIncludes:string='';
 
   //add student
   addProduct() {
-    if (this.prodDemension == '' || this.prodDes == '' || this.prodFinish == '' || this.prodIncludes == '' || this.prodMaterial == ''|| this.prodOrigin == ''|| this.prodPrice == ''|| this.prodName == '') {
+    if (this.prodDemension == '' || this.prodDes == ''  || this.prodIncludes == '' || this.prodMaterial == ''|| this.prodPrice == ''|| this.prodName == '') {
       alert('Please enter all fields');
       return;
     }
@@ -84,10 +81,8 @@ prodIncludes:string='';
       this.productObj.prodName = this.prodName;
       this.productObj.prodDes = this.prodDes;
       this.productObj.prodDemension = this.prodDemension;
-      this.productObj.prodFinish = this.prodFinish;
       this.productObj.prodIncludes = this.prodIncludes;
       this.productObj.prodMaterial = this.prodMaterial;
-      this.productObj.prodOrigin = this.prodOrigin;
       this.productObj.prodPrice = this.prodPrice;
 
       this.utility.addProduct(this.productObj);
@@ -103,10 +98,8 @@ prodIncludes:string='';
     this.prodName='',
     this.prodDes='',
     this.prodDemension='',
-    this.prodFinish='',
     this.prodIncludes='',
     this.prodMaterial='',
-    this.prodOrigin='',
     this.prodPrice='',
   
 
@@ -123,10 +116,8 @@ prodIncludes:string='';
    this.prodName = product.prodName;
       this.prodDes = product.prodDes;
       this.prodDemension = product.prodDemension;
-      this.prodFinish = product.prodFinish;
       this.prodIncludes = product.prodIncludes;
       this.prodMaterial = product.prodMaterial;
-      this.prodOrigin = product.prodOrigin;
       this.prodPrice = product.prodPrice;
 
 
@@ -140,10 +131,8 @@ prodIncludes:string='';
         prodName: this.prodName,
         prodDes: this.prodDes,
         prodDemension: this.prodDemension,
-        prodFinish: this.prodFinish,
         prodIncludes: this.prodIncludes,
         prodMaterial: this.prodMaterial,
-        prodOrigin: this.prodOrigin,
         prodPrice: this.prodPrice,
       };
   

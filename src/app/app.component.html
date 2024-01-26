@@ -20,10 +20,7 @@
             <input type="text" class="form-control" id="prodPrice" name="prodPrice" [(ngModel)]="prodPrice">
             <label for="prodPrice">Product Price</label>
           </div>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="prodOrigin" name="prodOrigin" [(ngModel)]="prodOrigin">
-            <label for="prodOrigin">Product origin</label>
-          </div>
+     
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="prodMaterial" name="prodMaterial" [(ngModel)]="prodMaterial">
             <label for="prodMaterial">Product Material</label>
@@ -32,10 +29,7 @@
             <input type="text" class="form-control" id="prodDemension" name="prodDemension" [(ngModel)]="prodDemension">
             <label for="prodDemension">Product Dimension</label>
           </div>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="prodFinish" name="prodFinish" [(ngModel)]="prodFinish">
-            <label for="prodFinish">Product Finish</label>
-          </div>
+      
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="prodIncludes" name="prodIncludes" [(ngModel)]="prodIncludes">
             <label for="prodIncludes">Product Includes</label>
@@ -61,10 +55,8 @@
             <th scope="col">Product Name</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
-            <th scope="col">origin</th>
             <th scope="col">Material</th>
             <th scope="col">Dimension</th>
-            <th scope="col">Finish</th>
             <th scope="col">Includes</th>
             <th scope="col">Actions</th>
           </tr>
@@ -74,10 +66,8 @@
             <td>{{product.prodName}}</td>
             <td>{{product.prodDes}}</td>
             <td>{{product.prodPrice}}</td>
-            <td>{{product.prodOrigin}}</td>
             <td>{{product.prodMaterial}}</td>
             <td>{{product.prodDemension}}</td>
-            <td>{{product.prodFinish}}</td>
             <td>{{product.prodIncludes}}</td>
 
             <td>
