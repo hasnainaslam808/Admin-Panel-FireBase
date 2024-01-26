@@ -34,6 +34,10 @@
             <input type="text" class="form-control" id="prodIncludes" name="prodIncludes" [(ngModel)]="prodIncludes">
             <label for="prodIncludes">Product Includes</label>
           </div>
+          <div class="form-floating mb-3">
+            <input type="file" (change)="onFileChange($event)" class="form-control mt-2" id="uploadimg" name="uploadimg" >
+            <label style="padding: 5px; " for="uploadimg">Upload image</label>
+          </div>
           <button type="button" class="btn btn-outline-success" (click)="addProduct()" *ngIf="!isUpdateMode">Add
             Product</button>
           <button type="button" class="btn btn-outline-success" (click)="updateProduct()" *ngIf="isUpdateMode">Update

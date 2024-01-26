@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Product } from './shared/model/product';
 import { UtilityService } from './shared/utility.service';
+import{AngularFireStorage}from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,7 @@ prodPrice:string='';
 prodMaterial:string='';
 prodDemension:string='';
 prodIncludes:string='';
-  constructor(private utility:UtilityService) { }
+  constructor(private utility:UtilityService,private firestorage:AngularFireStorage) { }
 
   ngOnInit(): void {
     this.getAllProduct();
@@ -141,5 +142,15 @@ prodIncludes:string='';
       this.resetForm();
     }
   }
-  
+
+
+  async onFileChange(event:any) {
+  const file = event.target.files[0];
+  if (file)
+{
+const path = `product/${file.name}`;
+const uploadImg = await this.firestorage.upload(path, file)
+
+}
+}
 }
