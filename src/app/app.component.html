@@ -34,10 +34,15 @@
             <input type="text" class="form-control" id="prodIncludes" name="prodIncludes" [(ngModel)]="prodIncludes">
             <label for="prodIncludes">Product Includes</label>
           </div>
-          <div class="form-floating mb-3">
-            <input type="file" (change)="onFileChange($event)" class="form-control mt-2" id="uploadimg" name="uploadimg" >
-            <label style="padding: 5px; " for="uploadimg">Upload image</label>
+        
+          <div class="form mb-3">
+            <label style="padding: 5px; " for="uploadimg">
+              <img *ngIf="loading" src="../assets/loading-icon-animated-gif-19-1.gif" alt="Loading" width="50px" height="50px">
+              <img *ngIf="!loading" src="assets/uploadimg.png" alt="" width="50px" height="50px">
+            </label>
+            <input type="file" multiple (change)="onFileChange($event)" class="form-control mt-2" id="uploadimg" name="uploadimg" style="display: none;">
           </div>
+          
           <button type="button" class="btn btn-outline-success" (click)="addProduct()" *ngIf="!isUpdateMode">Add
             Product</button>
           <button type="button" class="btn btn-outline-success" (click)="updateProduct()" *ngIf="isUpdateMode">Update
@@ -73,6 +78,13 @@
             <td>{{product.prodMaterial}}</td>
             <td>{{product.prodDemension}}</td>
             <td>{{product.prodIncludes}}</td>
+          <!-- Replace the line with <td>{{product.prodUrl}}</td> with the following: -->
+<td>
+  <div *ngFor="let imgUrl of product.prodUrl; let i = index">
+    <a href="{{imgUrl}}" target="_blank">img {{i + 1}}</a>
+  </div>
+</td>
+
 
             <td>
               <button class="btn btn-outline-danger" (click)="deleteProduct(product)">Delete</button>

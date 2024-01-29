@@ -6,5 +6,5 @@ export interface Product {
     prodMaterial:string;
     prodDemension:string;
     prodIncludes:string;
- 
+ prodUrl:string[];
 }

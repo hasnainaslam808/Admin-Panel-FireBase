@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Product } from './shared/model/product';
 import { UtilityService } from './shared/utility.service';
-import{AngularFireStorage}from '@angular/fire/compat/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-root',
@@ -10,47 +10,51 @@ import{AngularFireStorage}from '@angular/fire/compat/storage';
 })
 export class AppComponent {
   title = 'admin-panel';
-setproduct:boolean = false;
-setProduct(){
-this.setproduct=!this.setproduct;
-}
+
+  imgArray: string[] =[]
+  loading: boolean = false;
+
+  setproduct: boolean = false;
+  setProduct() {
+    this.setproduct = !this.setproduct;
+  }
 
   isUpdateMode: boolean = false;
-productList: Product[]=[];
-productObj:Product={
-  id: '',
-  prodName:'',
-    prodDes:'',
-    prodPrice:'',
-    prodMaterial:'',
-    prodDemension:'',
-    prodIncludes:'',
-  
-
-};
-id:string='';
-prodName:string='';
-prodDes:string='';
-prodPrice:string='';
-prodMaterial:string='';
-prodDemension:string='';
-prodIncludes:string='';
-  constructor(private utility:UtilityService,private firestorage:AngularFireStorage) { }
+  productList: Product[] = [];
+  productObj: Product = {
+    id: '',
+    prodName: '',
+    prodDes: '',
+    prodPrice: '',
+    prodMaterial: '',
+    prodDemension: '',
+    prodIncludes: '',
+    prodUrl: [],
+  };
+  id: string = '';
+  prodName: string = '';
+  prodDes: string = '';
+  prodPrice: string = '';
+  prodMaterial: string = '';
+  prodDemension: string = '';
+  prodIncludes: string = '';
+  prodUrl:string[] = [];
+  constructor(private utility: UtilityService, private firestorage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.getAllProduct();
   }
 
 
-// get all students 
-  getAllProduct(){
-    this.utility.getAllProduct().subscribe(res =>{
-      this.productList = res.map((e:any)=>{
+  // get all students 
+  getAllProduct() {
+    this.utility.getAllProduct().subscribe(res => {
+      this.productList = res.map((e: any) => {
         const data = e.payload.doc.data();
         data.id = e.payload.doc.id;
         return data;
       })
-    }, err =>{
+    }, err => {
       alert('Error Fetching Dats')
     })
   }
@@ -60,24 +64,24 @@ prodIncludes:string='';
   // delete student
 
 
-  deleteProduct(product:Product){
-    if(window.confirm('Are you sure want to delete this product'+product.prodName+'?')){
-    this.utility.deleteProduct(product);
+  deleteProduct(product: Product) {
+    if (window.confirm('Are you sure want to delete this product' + product.prodName + '?')) {
+      this.utility.deleteProduct(product);
     }
   }
 
   //add student
   addProduct() {
-    if (this.prodDemension == '' || this.prodDes == ''  || this.prodIncludes == '' || this.prodMaterial == ''|| this.prodPrice == ''|| this.prodName == '') {
+    if (this.prodDemension == '' || this.prodDes == '' || this.prodIncludes == '' || this.prodMaterial == '' || this.prodPrice == '' || this.prodName == '' ) {
       alert('Please enter all fields');
       return;
     }
-  
+
     if (this.id) {
-    
+
       this.updateProduct();
     } else {
-     
+
       this.productObj.id = '';
       this.productObj.prodName = this.prodName;
       this.productObj.prodDes = this.prodDes;
@@ -85,45 +89,49 @@ prodIncludes:string='';
       this.productObj.prodIncludes = this.prodIncludes;
       this.productObj.prodMaterial = this.prodMaterial;
       this.productObj.prodPrice = this.prodPrice;
+      this.productObj.prodUrl = this.imgArray;
 
       this.utility.addProduct(this.productObj);
     }
-  
+
     this.resetForm();
   }
-  
+
   // reset form
 
-  resetForm(){
-    this.id='',
-    this.prodName='',
-    this.prodDes='',
-    this.prodDemension='',
-    this.prodIncludes='',
-    this.prodMaterial='',
-    this.prodPrice='',
-  
+  resetForm() {
+    this.id = '',
+      this.prodName = '',
+      this.prodDes = '',
+      this.prodDemension = '',
+      this.prodIncludes = '',
+      this.prodMaterial = '',
+      this.prodPrice = '',
+      this.imgArray = [],
+      this.prodUrl=[],
 
-    this.isUpdateMode = false;
+
+      this.isUpdateMode = false;
   }
 
 
 
 
   updateProductForm(product: Product) {
- 
+
     this.id = product.id;
-    
-   this.prodName = product.prodName;
-      this.prodDes = product.prodDes;
-      this.prodDemension = product.prodDemension;
-      this.prodIncludes = product.prodIncludes;
-      this.prodMaterial = product.prodMaterial;
-      this.prodPrice = product.prodPrice;
+
+    this.prodName = product.prodName;
+    this.prodDes = product.prodDes;
+    this.prodDemension = product.prodDemension;
+    this.prodIncludes = product.prodIncludes;
+    this.prodMaterial = product.prodMaterial;
+    this.prodPrice = product.prodPrice;
+    this.prodUrl = product.prodUrl;
 
 
     this.isUpdateMode = true;
-  this.setproduct=true;
+    this.setproduct = true;
   }
   updateProduct() {
     if (this.id) {
@@ -135,8 +143,9 @@ prodIncludes:string='';
         prodIncludes: this.prodIncludes,
         prodMaterial: this.prodMaterial,
         prodPrice: this.prodPrice,
+        prodUrl: this.imgArray,
       };
-  
+
 
       this.utility.updateProduct(updatedProduct);
       this.resetForm();
@@ -144,13 +153,22 @@ prodIncludes:string='';
   }
 
 
-  async onFileChange(event:any) {
-  const file = event.target.files[0];
-  if (file)
-{
-const path = `product/${file.name}`;
-const uploadImg = await this.firestorage.upload(path, file)
-
-}
-}
-}
+  async onFileChange(event: any) {
+    const file = event.target.files[0];
+    this.loading = true;
+    if (this.imgArray.length < 4) {
+      if (file) {
+        const path = `product/${file.name}`;
+        const uploadImg = await this.firestorage.upload(path, file);
+        const imageUrl = await uploadImg.ref.getDownloadURL();
+  
+        this.imgArray.push(imageUrl); // Add the new URL to the array
+        this.loading = false;
+        console.log(this.imgArray);
+      }
+    } else {
+      alert('You can upload a maximum of 4 images.');
+      this.loading = false;
+    }
+  }
+  }
