@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import{AngularFireStorageModule}from '@angular/fire/compat/storage';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent
@@ -16,7 +17,8 @@ import{AngularFireStorageModule}from '@angular/fire/compat/storage';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    ToastrModule.forRoot(),
     
   ],
   providers: [],

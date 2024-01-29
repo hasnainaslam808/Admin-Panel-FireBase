@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Product } from './shared/model/product';
 import { UtilityService } from './shared/utility.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +40,7 @@ export class AppComponent {
   prodDemension: string = '';
   prodIncludes: string = '';
   prodUrl:string[] = [];
-  constructor(private utility: UtilityService, private firestorage: AngularFireStorage) { }
+  constructor(private utility: UtilityService, private firestorage: AngularFireStorage,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getAllProduct();
@@ -55,7 +56,7 @@ export class AppComponent {
         return data;
       })
     }, err => {
-      alert('Error Fetching Dats')
+      this.toastr.error('Error Fetching Dats')
     })
   }
 
@@ -73,7 +74,7 @@ export class AppComponent {
   //add student
   addProduct() {
     if (this.prodDemension == '' || this.prodDes == '' || this.prodIncludes == '' || this.prodMaterial == '' || this.prodPrice == '' || this.prodName == '' ) {
-      alert('Please enter all fields');
+      this.toastr.warning('Please enter all fields');
       return;
     }
 
@@ -167,7 +168,7 @@ export class AppComponent {
         console.log(this.imgArray);
       }
     } else {
-      alert('You can upload a maximum of 4 images.');
+      this.toastr.warning('You can upload a maximum of 4 images.');
       this.loading = false;
     }
   }
