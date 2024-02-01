@@ -3,16 +3,20 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Product } from './model/product';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFireMessaging } from "@angular/fire/compat/messaging";
-// import { MessagingService } from '@angular/fire/compat/messaging';
+import{getMessaging,getToken,onMessage} from'firebase/messaging';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
-
-  currentMessage = new BehaviorSubject<any>(null);
-
+  ngOnInit(): void {
+    this.requestPermission();
+    this.listen();
+  }
+ currentMessage = new BehaviorSubject<any>(null);
+ message:any = null;
   constructor(private afs: AngularFirestore, private afm: AngularFireMessaging) { 
     this.afm.messages.subscribe((_messaging:any) => {
       _messaging.onMessage = _messaging.onMessage.bind(_messaging);
@@ -20,7 +24,38 @@ export class UtilityService {
     })
   }
 
+  requestPermission() {
 
+    const messaging = getMessaging();
+    getToken(messaging, 
+     { vapidKey: environment.firebase.vapidKey}).then(
+       (currentToken) => {
+         if (currentToken) {
+           console.log("Hurraaa!!! we got the token.....");
+           console.log(currentToken);
+         } else {
+           console.log('No registration token available. Request permission to generate one.');
+         }
+     }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+    });
+  }
+
+  listen() {
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+      console.log('Message received. ', payload);
+      this.message=payload;
+    });
+  }
+
+  receiveMessage() {
+    this.afm.messages.subscribe((payload: any)=>{
+      console.log("received message", payload);
+      this.currentMessage.next(payload)
+
+    })
+  }
 
   // add student
 
@@ -57,25 +92,10 @@ export class UtilityService {
 
 
 
-  requestPermission() {
 
-    this.afm.requestToken.subscribe((token) => {
-      console.log(token);
-
-    }, (err) => {
-      console.log("unable to fetch",err.message);
-
-
-    })
-  }
-
-  receiveMessage() {
-    this.afm.messages.subscribe((payload: any)=>{
-      console.log("received message", payload);
-      this.currentMessage.next(payload)
-
-    })
-  }
+ 
+  // requestPermission() {
+  
+  // }
+ 
 }
-
-
