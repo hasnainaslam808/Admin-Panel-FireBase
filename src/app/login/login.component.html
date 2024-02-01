@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 order-md-2 form-right">
+        <img src="assets/images/icon.png" alt="icon">
+        <h4 class="pt-3">Login to your Account</h4>
+        <h6 class="text-muted">Welcome back! Please enter your details</h6>
+  
+        <form >
+          <div class="form-group pt-2">
+            <label for="exampleInputEmail1 fs-18">Email</label>
+            <input type="email" class="form-control pt-2" name="email" placeholder="Enter your email" [(ngModel)]="email" required>
+          </div>
+          <div class=" form-group pt-1 password">
+            <label>Password</label>
+            <div class="input-group">
+              <input [type]="showPassword ? 'text' : 'password'" class="form-control pt-2" #passwordField name="password"
+                placeholder="Enter your Password" [(ngModel)]="password" required>
+              <button class="eye-off-btn" type="button" (click)="togglePasswordVisibility()">
+                <img [src]="showPassword ? '../../assets/images/eye-slash.2.svg' : '../../assets/images/eye.3.svg'"
+                  alt="eyebutton"></button>
+            </div>
+          </div>
+  
+          <div class="form-group form-check pt-3">
+            <input type="checkbox" class="form-check-input">
+            <div class="remember-me">
+              <div><label class="form-check-label pb-2" for="exampleCheck1">Remember me</label></div>
+              <div class="text-primary "><a class="text-decoration-none" routerLink="/forget-password">Forget
+                  Password?</a></div>
+            </div>
+          </div>
+          <p class="text-dark"><a class="text-decoration-none" routerLink="/register">create your account</a></p>
+          <button class="btn btn-primary w-100" (click)="onlogin()">Sign In</button>
+          <!-- routerLink="/otp" -->
+          <p class=" text-center pt-2">OR</p>
+          <div class="btn-grp pb-3"><button (click)="signGoogle()"><img src="assets/images/google-icon.png" alt="" width="24px" height="24px"> Sign in with Google</button>
+            <button><img src="assets/images/facebook.png" alt="" height="24px" width="14px"> Sign in withFacebook</button>
+            <button><img src="assets/images/Black.png" alt="" width="20px" height="20px"> Sign in with Apple</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6 order-md-1 form-left">
+        <img src="../../assets/images/form-icon.png" alt="">
+      </div>
+    </div>
+  </div>
+  

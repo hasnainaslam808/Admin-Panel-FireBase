@@ -1,0 +1,104 @@
+
+
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-5">
+        <div class="card border-0 shadow p-3">
+          <div class="form-floating mb-3 text-center">
+            <a (click)="setProduct()" *ngIf="!setproduct" class="text-warning">Add Product </a>
+            <a (click)="setProduct()" *ngIf="setproduct" class="text-danger">Cancel </a>
+          </div>
+          <div *ngIf="setproduct">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="firstName" name="prodName" [(ngModel)]="prodName">
+              <label for="prodName">Product Name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="prodDes" name="prodDes" [(ngModel)]="prodDes">
+              <label for="prodDes">Product Description</label>
+            </div>
+  
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="prodPrice" name="prodPrice" [(ngModel)]="prodPrice">
+              <label for="prodPrice">Product Price</label>
+            </div>
+       
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="prodMaterial" name="prodMaterial" [(ngModel)]="prodMaterial">
+              <label for="prodMaterial">Product Material</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="prodDemension" name="prodDemension" [(ngModel)]="prodDemension">
+              <label for="prodDemension">Product Dimension</label>
+            </div>
+        
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="prodIncludes" name="prodIncludes" [(ngModel)]="prodIncludes">
+              <label for="prodIncludes">Product Includes</label>
+            </div>
+          
+            <div class="form mb-3">
+              <label style="padding: 5px; " for="uploadimg">
+                <img *ngIf="loading" src="../assets/loading-icon-animated-gif-19-1.gif" alt="Loading" width="50px" height="50px">
+                <img *ngIf="!loading" src="assets/uploadimg.png" alt="" width="50px" height="50px">
+              </label>
+              <input type="file" multiple (change)="onFileChange($event)" class="form-control mt-2" id="uploadimg" name="uploadimg" style="display: none;">
+            </div>
+            
+            <button type="button" class="btn btn-outline-success" (click)="addProduct()" *ngIf="!isUpdateMode">Add
+              Product</button>
+            <button type="button" class="btn btn-outline-success" (click)="updateProduct()" *ngIf="isUpdateMode">Update
+              Product</button>
+          </div>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+  <div class="col-md-10 offset-md-1 mt-2">
+    <h5 class="text-danger "> Product List</h5>
+    <div class="card p-3 shadow">
+      <div class="card-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Product Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Material</th>
+              <th scope="col">Dimension</th>
+              <th scope="col">Includes</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of productList">
+              <td>{{product.prodName}}</td>
+              <td>{{product.prodDes}}</td>
+              <td>{{product.prodPrice}}</td>
+              <td>{{product.prodMaterial}}</td>
+              <td>{{product.prodDemension}}</td>
+              <td>{{product.prodIncludes}}</td>
+            <!-- Replace the line with <td>{{product.prodUrl}}</td> with the following: -->
+  <td>
+    <div *ngFor="let imgUrl of product.prodUrl; let i = index">
+      <a href="{{imgUrl}}" target="_blank">img {{i + 1}}</a>
+    </div>
+  </td>
+  
+  
+              <td>
+                <button class="btn btn-outline-danger" (click)="deleteProduct(product)">Delete</button>
+                <a style="cursor: pointer; margin-left: 4px;" (click)="updateProductForm(product)"><i
+                    class="fa-solid fa-pen"></i></a>
+              </td>
+            </tr>
+  
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {{message | async | json}}
