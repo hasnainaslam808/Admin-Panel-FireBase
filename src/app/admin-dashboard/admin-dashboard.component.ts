@@ -47,6 +47,7 @@ message:any;
   ngOnInit(): void {
 
     this.utility.requestPermission();
+    this.utility.listen();
     this.utility.receiveMessage();
     this.message = this.utility.currentMessage;
     this.getAllProduct();
@@ -98,7 +99,9 @@ message:any;
       this.productObj.prodPrice = this.prodPrice;
       this.productObj.prodUrl = this.imgArray;
 
-      this.utility.addProduct(this.productObj);
+      this.utility.addProduct(this.productObj).then((res:any)=>{
+        
+      });
     }
 
     this.resetForm();

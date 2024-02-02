@@ -12,11 +12,13 @@ import { environment } from 'src/environments/environment';
 })
 export class UtilityService {
   ngOnInit(): void {
-    this.requestPermission();
-    this.listen();
+   
   }
  currentMessage = new BehaviorSubject<any>(null);
  message:any = null;
+  token={
+  tokennid:""
+ }
   constructor(private afs: AngularFirestore, private afm: AngularFireMessaging) { 
     this.afm.messages.subscribe((_messaging:any) => {
       _messaging.onMessage = _messaging.onMessage.bind(_messaging);
@@ -26,26 +28,31 @@ export class UtilityService {
 
   requestPermission() {
 
+
+
     const messaging = getMessaging();
     getToken(messaging, 
      { vapidKey: environment.firebase.vapidKey}).then(
        (currentToken) => {
          if (currentToken) {
-           console.log("Hurraaa!!! we got the token.....");
            console.log(currentToken);
+           this.token.tokennid = currentToken;
+            this.addToken();
          } else {
            console.log('No registration token available. Request permission to generate one.');
          }
      }).catch((err) => {
         console.log('An error occurred while retrieving token. ', err);
     });
+
+
   }
 
   listen() {
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
       console.log('Message received. ', payload);
-      this.message=payload;
+      this.currentMessage.next(payload);
     });
   }
 
@@ -62,6 +69,11 @@ export class UtilityService {
   addProduct(product: Product) {
     product.id = this.afs.createId();
     return this.afs.collection('/product').add(product);
+
+  }
+//add token
+  addToken() {
+     return this.afs.collection('/token').add(this.token);
   }
 
 
