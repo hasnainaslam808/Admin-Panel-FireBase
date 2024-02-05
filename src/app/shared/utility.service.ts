@@ -3,8 +3,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Product } from './model/product';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFireMessaging } from "@angular/fire/compat/messaging";
-import{getMessaging,getToken,onMessage} from'firebase/messaging';
+import{getToken,onMessage} from'firebase/messaging';
 import { environment } from 'src/environments/environment';
+import { getMessaging } from "firebase/messaging/sw";
+import { onBackgroundMessage } from "firebase/messaging/sw";
 
 
 @Injectable({
@@ -37,7 +39,7 @@ export class UtilityService {
          if (currentToken) {
            console.log(currentToken);
            this.token.tokennid = currentToken;
-            this.addToken();
+            // this.addToken();
          } else {
            console.log('No registration token available. Request permission to generate one.');
          }
@@ -72,10 +74,22 @@ export class UtilityService {
 
   }
 //add token
-  addToken() {
-     return this.afs.collection('/token').add(this.token);
-  }
-
+  // addToken() {
+  //    return this.afs.collection('/token').add(this.token);
+  // }
+  // sendNotificationToAllUsers() {
+  //   // Retrieve all user FCM tokens from your database
+  //   const allUserTokens = ['USER1_FCM_TOKEN', 'USER2_FCM_TOKEN', /* ... */];
+  
+  //   // Create a notification message
+  //   const message = {
+  //     notification: {
+  //       title: 'New Product',
+  //       body: 'Check out the latest product in our store!'
+  //     },
+  //     tokens: ["eN-s0bjb1Z9nx_RDru0Ou3:APA91bGL9NCGH6ONcavEHKaPwVL-OEpMs6B7FH_RWdHawFL00wWDn_Nhq-y_1zf06v2gX1yfFKBH69DIBbcCCXGr18y6IyYayDroyxubfCIJTCT1qn1zr9x6aXTWETjEWRSLjGJdgHl1"]
+  //   };
+  // }
 
   // get all students
   getAllProduct() {

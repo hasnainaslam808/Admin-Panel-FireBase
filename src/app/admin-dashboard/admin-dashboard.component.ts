@@ -100,7 +100,13 @@ message:any;
       this.productObj.prodUrl = this.imgArray;
 
       this.utility.addProduct(this.productObj).then((res:any)=>{
-        
+        const message = {
+          notification: {
+            title: 'New Product',
+            body: 'Check out the latest product in our store!'
+          },
+          token: "eN-s0bjb1Z9nx_RDru0Ou3:APA91bGL9NCGH6ONcavEHKaPwVL-OEpMs6B7FH_RWdHawFL00wWDn_Nhq-y_1zf06v2gX1yfFKBH69DIBbcCCXGr18y6IyYayDroyxubfCIJTCT1qn1zr9x6aXTWETjEWRSLjGJdgHl1"
+        };
       });
     }
 
