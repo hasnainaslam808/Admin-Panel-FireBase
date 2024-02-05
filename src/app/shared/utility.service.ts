@@ -6,7 +6,7 @@ import { AngularFireMessaging } from "@angular/fire/compat/messaging";
 import{getToken,onMessage} from'firebase/messaging';
 import { environment } from 'src/environments/environment';
 import { getMessaging } from "firebase/messaging/sw";
-import { onBackgroundMessage } from "firebase/messaging/sw";
+// import { onBackgroundMessage } from "firebase/messaging/sw";
 
 
 @Injectable({
@@ -22,10 +22,10 @@ export class UtilityService {
   tokennid:""
  }
   constructor(private afs: AngularFirestore, private afm: AngularFireMessaging) { 
-    this.afm.messages.subscribe((_messaging:any) => {
-      _messaging.onMessage = _messaging.onMessage.bind(_messaging);
-      _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
-    })
+    // this.afm.messages.subscribe((_messaging:any) => {
+    //   _messaging.onMessage = _messaging.onMessage.bind(_messaging);
+    //   _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
+    // })
   }
 
   requestPermission() {
@@ -38,7 +38,7 @@ export class UtilityService {
        (currentToken) => {
          if (currentToken) {
            console.log(currentToken);
-           this.token.tokennid = currentToken;
+          //  this.token.tokennid = currentToken;
             // this.addToken();
          } else {
            console.log('No registration token available. Request permission to generate one.');
@@ -50,21 +50,21 @@ export class UtilityService {
 
   }
 
-  listen() {
-    const messaging = getMessaging();
-    onMessage(messaging, (payload) => {
-      console.log('Message received. ', payload);
-      this.currentMessage.next(payload);
-    });
-  }
+  // listen() {
+  //   const messaging = getMessaging();
+  //   onMessage(messaging, (payload) => {
+  //     console.log('Message received. ', payload);
+  //     this.currentMessage.next(payload);
+  //   });
+  // }
 
-  receiveMessage() {
-    this.afm.messages.subscribe((payload: any)=>{
-      console.log("received message", payload);
-      this.currentMessage.next(payload)
+  // receiveMessage() {
+  //   this.afm.messages.subscribe((payload: any)=>{
+  //     console.log("received message", payload);
+  //     this.currentMessage.next(payload)
 
-    })
-  }
+  //   })
+  // }
 
   // add student
 

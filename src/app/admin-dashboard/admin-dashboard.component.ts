@@ -47,8 +47,8 @@ message:any;
   ngOnInit(): void {
 
     this.utility.requestPermission();
-    this.utility.listen();
-    this.utility.receiveMessage();
+    // this.utility.listen();
+    // this.utility.receiveMessage();
     this.message = this.utility.currentMessage;
     this.getAllProduct();
   }
